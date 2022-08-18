@@ -8,7 +8,7 @@ export default function App() {
       const [city, setCity] = useState(0);
       const [inputCity, setInputCity] = useState(0);
 
-      async function carregaCity(){
+      async function buscaCep(){
         const response = await Api.get('&city_name='+inputCity);
 
         setCity(response.data)
@@ -23,11 +23,12 @@ export default function App() {
         <TextInput 
           placeholder='sua cidade ...'
           style={styles.input}
+          
         />
       </View>
       <View style={styles.blocoGeral}>
         <TouchableOpacity style={styles.botao}
-          onPress={carregaCity}
+          onPress={buscaCep}
         >
           <Text style={styles.textoBotao}>Buscar</Text>
         </TouchableOpacity>
@@ -47,7 +48,13 @@ const styles = StyleSheet.create({
     marginTop:20
   },
   titulo:{
-    fontSize:30
+    fontSize:30,
+    backgroundColor: '#010485',
+    color: '#FFF',
+    padding: 7,
+    width: '100%',
+    textAlign: 'center'
+
   },
   label:{
     fontSize:20,
@@ -57,12 +64,19 @@ const styles = StyleSheet.create({
     marginLeft:'10%',
     borderBottomWidth:2,
     marginRight:'10%',
-    fontSize:20
+    fontSize:20,
+    padding: 10,
+    borderRadius: 10,
+    
   },
   botao:{
+    padding: 5,
+    marginTop: 10,
     marginLeft:'10%',
     marginRight:'10%',
-    backgroundColor:'#000',
+    backgroundColor:'#010485',
+    borderRadius: 10,
+    
   },
   textoBotao:{
     color:'#FFF',
