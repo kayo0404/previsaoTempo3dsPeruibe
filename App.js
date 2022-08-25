@@ -1,28 +1,34 @@
 import  React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} 
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions} 
 from 'react-native';
 import Api from './components/Api';
 import  Tempo  from './components/Tempo';
 
 export default function App() {
       const [city, setCity] = useState(0);
+      const [city2, setCity2] = useState(0);
       const [inputCity, setInputCity] = useState(0);
 
       async function buscaCep(){
-        const response = await Api.get('&city_name='+inputCity);
+        const response = await Api.get('weather?array_limit=1&fields=only_results,temp,city_name,forecast,max,min,date,description&key=ee567e86&city_name='+inputCity);
 
-        setCity(response.data)
+        setCity(response.data.forecast[0]);
+        setCity2(response.data);
       }
   return ( 
     <View style={styles.container}>
       <View style={styles.bloco}>
-        <Text style={styles.titulo}>Previsão do Tempo</Text>
+        <View style={styles.header}>
+          <Text style={styles.titulo}>Previsão do Tempo</Text>
+
+          </View>
       </View>
       <View style={styles.blocoGeral}>
         <Text style={styles.label}>Digite sua Cidade: </Text>
         <TextInput 
           placeholder='sua cidade ...'
           style={styles.input}
+          onChangeText={(value)=>setInputCity(value)}
           
         />
       </View>
@@ -33,28 +39,34 @@ export default function App() {
           <Text style={styles.textoBotao}>Buscar</Text>
         </TouchableOpacity>
       </View>
-      <Tempo/>
+      <Tempo data={city} data2={city2}/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: 'flex',
+    flexDirection: 'column', 
+    alignItems: 'center'
   },
   bloco:{
     alignItems:'center',
-    marginBottom:20,
     marginTop:20
+  },
+  header:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent:'space-around',
+    alignItems: 'center',
+    width: Dimensions.get('window').width,
+    backgroundColor: '#010485',
+   
+
   },
   titulo:{
     fontSize:30,
-    backgroundColor: '#010485',
-    color: '#FFF',
-    padding: 7,
-    width: '100%',
-    textAlign: 'center'
-
+    color: '#FFF'
   },
   label:{
     fontSize:20,
