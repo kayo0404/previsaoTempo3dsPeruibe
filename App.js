@@ -69,8 +69,9 @@ const styles = StyleSheet.create({
     color: '#FFF'
   },
   label:{
-    fontSize:20,
-    marginLeft:'10%'
+    fontSize:25,
+    marginLeft:'10%',
+
   },
   input:{
     marginLeft:'10%',
@@ -83,9 +84,7 @@ const styles = StyleSheet.create({
   },
   botao:{
     padding: 5,
-    marginTop: 10,
-    marginLeft:'10%',
-    marginRight:'10%',
+    marginTop: 3,
     backgroundColor:'#010485',
     borderRadius: 10,
     
@@ -96,6 +95,7 @@ const styles = StyleSheet.create({
     textAlign:'center'
   },
   blocoGeral:{
-    marginTop:20
+    marginTop:15,
+    marginVertical: 10
   }
 });
