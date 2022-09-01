@@ -1,5 +1,5 @@
 import  React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions} 
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, ScrollView} 
 from 'react-native';
 import Api from './components/Api';
 import  Tempo  from './components/Tempo';
@@ -7,16 +7,21 @@ import  Tempo  from './components/Tempo';
 export default function App() {
       const [city, setCity] = useState(0);
       const [city2, setCity2] = useState(0);
+      const [city3, setCity3] = useState(0);
       const [inputCity, setInputCity] = useState(0);
 
       async function buscaCep(){
-        const response = await Api.get('weather?array_limit=1&fields=only_results,temp,city_name,forecast,max,min,date,description&key=ee567e86&city_name='+inputCity);
+        const response = await Api.get('weather?array_limit=2&fields=only_results,temp,city_name,forecast,max,min,date,description&key=89e1add9&city_name='+inputCity);
 
         setCity(response.data.forecast[0]);
+        setCity3(response.data.forecast[1]);
         setCity2(response.data);
       }
   return ( 
+    
+
     <View style={styles.container}>
+    
       <View style={styles.bloco}>
         <View style={styles.header}>
           <Text style={styles.titulo}>Previsão do Tempo</Text>
@@ -39,8 +44,12 @@ export default function App() {
           <Text style={styles.textoBotao}>Buscar</Text>
         </TouchableOpacity>
       </View>
-      <Tempo data={city} data2={city2}/>
+      <ScrollView style={styles.scroll}>
+      <Tempo data={city} data2={city2} data3={city3}/>
+      <Tempo data={city} data2={city2} data3={city3}/>
+      </ScrollView>
     </View>
+
   );
 }
 
@@ -48,7 +57,9 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column', 
-    alignItems: 'center'
+    alignItems: 'center',
+    height: Dimensions.get('window').height,
+    
   },
   bloco:{
     alignItems:'center',
@@ -97,5 +108,11 @@ const styles = StyleSheet.create({
   blocoGeral:{
     marginTop:15,
     marginVertical: 10
+  },
+  scroll:{
+    width: '90%',
+    marginLeft: '10%',
+    marginTop: 10,
+    height: '100%'
   }
 });
