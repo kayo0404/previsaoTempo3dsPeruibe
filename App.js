@@ -1,5 +1,5 @@
 import  React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, ScrollView} 
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, ScrollView, FlatList} 
 from 'react-native';
 import Api from './components/Api';
 import  Tempo  from './components/Tempo';
@@ -11,10 +11,10 @@ export default function App() {
       const [inputCity, setInputCity] = useState(0);
 
       async function buscaCep(){
-        const response = await Api.get('weather?array_limit=2&fields=only_results,temp,city_name,forecast,max,min,date,description&key=89e1add9&city_name='+inputCity);
+        const response = await Api.get('weather?array_limit=10&fields=only_results,temp,city_name,forecast,max,min,date,description&key=89e1add9&city_name='+inputCity);
 
         setCity(response.data.forecast[0]);
-        setCity3(response.data.forecast[1]);
+        setCity3(response.data.forecast);
         setCity2(response.data);
       }
   return ( 
@@ -44,10 +44,21 @@ export default function App() {
           <Text style={styles.textoBotao}>Buscar</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scroll}>
-      <Tempo data={city} data2={city2} data3={city3}/>
-      <Tempo data={city} data2={city2} data3={city3}/>
-      </ScrollView>
+     
+       <FlatList
+        data={city3}
+        renderItem={({item})=>{
+          return(
+            <View>
+            <Text>Data: {item.date}</Text>
+            <Text>Min: {item.min}</Text>
+            <Text>Max: {item.max}</Text>
+            <Text>Descrição: {item.description}</Text>
+            </View>
+          );
+        }}
+      />
+      
     </View>
 
   );
